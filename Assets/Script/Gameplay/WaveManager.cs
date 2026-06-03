@@ -10,13 +10,8 @@ namespace TinyRPG.Gameplay
         [SerializeField] private float _spawnInterval = 1f;
         [SerializeField] private float _spawnRadius = 15f;
         
-        private EnemyFactory _factory;
+        [SerializeField] private EnemyFactory _factory;
         private float _timer;
-
-        private void Start()
-        {
-            _factory = ServiceLocator.Get<EnemyFactory>();
-        }
 
         private void Update()
         {

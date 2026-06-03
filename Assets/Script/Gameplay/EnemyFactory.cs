@@ -13,20 +13,11 @@ namespace TinyRPG.Gameplay
     {
         private PoolManager _poolManager;
 
-        private void Awake()
+        public void Init(PoolManager poolManager)
         {
-            ServiceLocator.Register<EnemyFactory>(this);
+            _poolManager = poolManager;
         }
 
-        private void Start()
-        {
-            _poolManager = ServiceLocator.Get<PoolManager>();
-        }
-
-        private void OnDestroy()
-        {
-            ServiceLocator.Unregister<EnemyFactory>();
-        }
 
         /// <summary>
         /// Fabrique un ennemi à partir de ses données.
