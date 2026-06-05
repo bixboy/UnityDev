@@ -9,7 +9,7 @@ Ce document détaille les Design Patterns intégrés dans mon implémentation du
 
 ## 2. SOAP (Scriptable Object Architecture) & Flyweight
 **Fichiers :** `EnemyData.cs`, `WeaponData.cs`
-- **Pourquoi ?** Si l'on instancie 500 Orcs, on ne veut pas copier 500 fois leurs statistiques de base en RAM.
+- **Pourquoi ?** Si l'on instancie 500 enemies, on ne veut pas copier 500 fois leurs statistiques de base en RAM.
 - **Comment ?** Les données statiques et invariables sont stockées dans des `ScriptableObjects`. Chaque ennemi (`Enemy.cs`) conserve uniquement une référence (pointeur) vers son ScriptableObject. C'est l'application du pattern *Flyweight* (poids mouche) et de la séparation des données (Data Locality).
 
 ## 3. Alterable (Pipeline de Statistiques)
@@ -46,8 +46,8 @@ Ce document détaille les Design Patterns intégrés dans mon implémentation du
   - **Injection par Méthode / Constructeur (Slide 28) :** L'`EnemyFactory` ne va pas chercher ses dépendances d'elle-même. Elle possède une méthode `Init(PoolManager poolManager)` qui exprime explicitement son besoin. Un script chef d'orchestre (`GameBootstrapper`) est chargé de satisfaire cette dépendance de manière totalement contrôlée au lancement du jeu.
 
 ## 9. Les limites de l'architecture : Vers la Data Locality et l'ECS
-**Ouvrir la discussion (Slides 45 à 51)**
+**Slides 45 à 51**
 - **La question :** Est-il vraiment optimisé d'avoir des composants `Enemy` et `Health` sur chaque instance si l'on veut faire apparaître 10 000 ennemis simultanément ?
 - **La réponse courte :** Non. Bien que mon architecture (Object Pool + Proxy + Flyweight) soit l'approche **GameObject (MonoBehaviour)** la plus optimisée possible (Slide 50 : "Stable, éprouvé"), elle possède des limites.
-- **La réponse longue (Data Locality) :** Chaque `MonoBehaviour` et chaque `GameObject` a un surcoût en mémoire (Heap) et en temps CPU (appels virtuels, gestion de la hiérarchie). Pour atteindre une performance extrême (AAA, milliers d'entités), il faut repenser l'architecture selon l'**Entity Component System (ECS)** via Unity DOTS. Au lieu d'avoir un composant `Health` sur chaque ennemi, j'aurais un immense tableau contigu en mémoire contenant uniquement des entiers (`HP`), et un `System` unique chargé de parcourir ce tableau de façon ultra-rapide (Data Locality).
+- **La réponse longue (Data Locality) :** Chaque `MonoBehaviour` et chaque `GameObject` a un surcoût en mémoire (Heap) et en temps CPU (appels virtuels, gestion de la hiérarchie). Pour atteindre une performance extrême (milliers d'entités), il faut repenser l'architecture selon l'**Entity Component System (ECS)** via Unity DOTS. Au lieu d'avoir un composant `Health` sur chaque ennemi, j'aurais un immense tableau contigu en mémoire contenant uniquement des entiers (`HP`), et un `System` unique chargé de parcourir ce tableau de façon ultra-rapide (Data Locality).
 - **Mon choix :** Comme indiqué Slide 51, *"On peut tout à fait mélanger les deux approches"*. Pour un prototype fonctionnel et facile à maintenir, l'approche *GameObject optimisée* est idéale. Si le jeu devenait un projet commercial de très grande envergure, il faudrait basculer ces systèmes vitaux (déplacement, vie) sous DOTS.
