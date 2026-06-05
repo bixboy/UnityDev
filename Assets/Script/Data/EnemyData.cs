@@ -1,12 +1,8 @@
 using UnityEngine;
 
+
 namespace TinyRPG.Data
 {
-    /// <summary>
-    /// Pattern SOAP (Scriptable Object Architecture) / Flyweight.
-    /// Contient les données invariables des ennemis pour ne pas 
-    /// les dupliquer sur chaque instance dans la scène.
-    /// </summary>
     [CreateAssetMenu(fileName = "NewEnemyData", menuName = "TinyRPG/Enemy Data")]
     public class EnemyData : ScriptableObject
     {
@@ -14,6 +10,8 @@ namespace TinyRPG.Data
         public float BaseHealth;
         public float BaseMovementSpeed;
         public float BaseDamage;
+        public float AttackRange = 1.5f;
+        public float AttackCooldown = 1.0f;
         public int ExpReward;
     }
 }

@@ -2,13 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 namespace TinyRPG.Core
 {
-    /// <summary>
-    /// Implémentation du pattern Service Locator.
-    /// Évite l'utilisation excessive de Singletons stricts (anti-pattern)
-    /// en fournissant un registre global de services découplés.
-    /// </summary>
+
     public static class ServiceLocator
     {
         private static readonly Dictionary<Type, object> _services = new Dictionary<Type, object>();
@@ -27,6 +24,7 @@ namespace TinyRPG.Core
             }
         }
 
+
         public static void Unregister<T>()
         {
             var type = typeof(T);
@@ -35,6 +33,7 @@ namespace TinyRPG.Core
                 _services.Remove(type);
             }
         }
+        
 
         public static T Get<T>()
         {

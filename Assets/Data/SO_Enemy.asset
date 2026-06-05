@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: SO_Enemy
   m_EditorClassIdentifier: Assembly-CSharp::TinyRPG.Data.EnemyData
   EnemyId: 01
-  BaseHealth: 50
+  BaseHealth: 5
   BaseMovementSpeed: 15
   BaseDamage: 5
+  AttackRange: 1.5
+  AttackCooldown: 1
   ExpReward: 50

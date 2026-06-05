@@ -17,7 +17,6 @@ namespace TinyRPG.Gameplay
         public void Enter()
         {
             _timer = 0f;
-            // TODO: Jouer l'animation de mort, désactiver le collider
             
             // Drop de l'XP
             // Exemple de Factory pour spawner une gemme
@@ -28,7 +27,7 @@ namespace TinyRPG.Gameplay
             _timer += Time.deltaTime;
             if (_timer >= _dieDuration)
             {
-                // On remet l'ennemi dans l'object pool
+                // Remet l'ennemi dans le pool
                 PoolManager poolManager = ServiceLocator.Get<PoolManager>();
                 if (poolManager != null)
                 {
@@ -36,7 +35,7 @@ namespace TinyRPG.Gameplay
                 }
                 else
                 {
-                    GameObject.Destroy(_enemy.gameObject); // Fallback
+                    GameObject.Destroy(_enemy.gameObject);
                 }
             }
         }
