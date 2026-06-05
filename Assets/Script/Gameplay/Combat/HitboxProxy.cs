@@ -2,16 +2,13 @@ using UnityEngine;
 
 namespace TinyRPG.Gameplay
 {
-    /// <summary>
-    /// Pattern Proxy (Redirection).
-    /// Se place sur l'objet contenant le Collider, et redirige
-    /// l'appel des collisions/dégâts vers le composant Health principal.
-    /// Évite les GetComponentInParent coûteux dans l'arbre.
-    /// </summary>
     [RequireComponent(typeof(Collider))]
     public class HitboxProxy : MonoBehaviour
     {
         [SerializeField] private Health _healthTarget;
+        
+        public Health HealthTarget => _healthTarget;
+        
 
         public void TakeDamage(float amount)
         {

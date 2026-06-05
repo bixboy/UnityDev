@@ -29,6 +29,7 @@ namespace TinyRPG.Data
                     projectile.Speed = ProjectileSpeed;
                     projectile.Damage = BaseDamage;
                     projectile.PoolId = ProjectilePoolId;
+                    projectile.Owner = playerTransform.gameObject;
                 }
             }
         }

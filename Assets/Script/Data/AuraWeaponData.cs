@@ -28,7 +28,6 @@ namespace TinyRPG.Data
                 {
                     auraObj.transform.SetParent(playerTransform);
                     auraObj.transform.localScale = new Vector3(AuraRadius * 2f, auraObj.transform.localScale.y, AuraRadius * 2f);
-
                     AuraDamageZone damageZone = auraObj.GetComponent<AuraDamageZone>();
                     if (damageZone == null)
                     {
@@ -37,9 +36,11 @@ namespace TinyRPG.Data
 
                     damageZone.Damage = BaseDamage;
                     damageZone.TickRate = BaseFireRate > 0 ? 1f / BaseFireRate : 1f;
+                    damageZone.Owner = playerTransform.gameObject;
                     
                     Collider col = auraObj.GetComponent<Collider>();
-                    if (col != null) col.isTrigger = true;
+                    if (col != null)
+                        col.isTrigger = true;
                 }
             }
             else

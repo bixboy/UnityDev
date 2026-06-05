@@ -9,13 +9,17 @@ namespace TinyRPG.Gameplay
         [HideInInspector] public string PoolId;
         [HideInInspector] public float Speed;
         [HideInInspector] public float Damage;
+
+        [HideInInspector] public GameObject Owner;
         public float LifeTime = 3f;
+
         
         [Tooltip("Vitesse de rotation du projectile sur lui-même (ex: X=0, Y=0, Z=360 pour un shuriken)")]
         public Vector3 SpinSpeed = Vector3.zero;
 
         private float _timer;
         private Vector3 _direction;
+
 
         public void OnSpawned()
         {
@@ -31,6 +35,7 @@ namespace TinyRPG.Gameplay
             }
         }
 
+
         private void Awake()
         {
             Collider col = GetComponent<Collider>();
@@ -45,9 +50,11 @@ namespace TinyRPG.Gameplay
             }
         }
 
+
         public void OnDespawned()
         {
         }
+
 
         private void Update()
         {
@@ -65,15 +72,20 @@ namespace TinyRPG.Gameplay
             }
         }
 
+
         private void OnTriggerEnter(Collider other)
         {
             HitboxProxy hitbox = other.GetComponent<HitboxProxy>();
-            if (hitbox != null)
+            if (hitbox != null && hitbox.HealthTarget != null)
             {
+                if (Owner != null && hitbox.HealthTarget.gameObject == Owner)
+                    return;
+
                 hitbox.TakeDamage(Damage);
                 ReturnToPool();
             }
         }
+
 
         private void ReturnToPool()
         {
